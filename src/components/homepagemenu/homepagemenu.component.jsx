@@ -1,7 +1,7 @@
 import React from "react";
 import "./directory.styles.css";
 
-import { MenuItem } from "../menuitem/menuitem.component";
+import MenuItem from "../menuitem/menuitem.component";
 
 class HomePageMenu extends React.Component {
   constructor() {
@@ -47,15 +47,8 @@ class HomePageMenu extends React.Component {
   render() {
     return (
       <div className="homepage-menu">
-        {this.state.categories.map((category) => {
-          return (
-            <MenuItem
-              key={category.id}
-              title={category.title}
-              imageUrl={category.imageUrl}
-              size={category.size}
-            />
-          );
+        {this.state.categories.map(({ id, ...otherProps }) => {
+          return <MenuItem key={id} {...otherProps} />;
         })}
       </div>
     );
