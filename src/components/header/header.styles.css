@@ -17,6 +17,7 @@
   align-items: center;
   justify-content: flex-end;
   font-size: 25px;
+  padding-top: 20px;
 }
 .option {
   padding: 10px 15px;
