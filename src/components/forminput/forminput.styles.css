@@ -42,7 +42,9 @@
   color: black;
 }
 
-.password {
-  width: 90%;
-  display: block;
+.view {
+  position: absolute;
+  cursor: pointer;
+  right: -15px;
+  top: 10px;
 }

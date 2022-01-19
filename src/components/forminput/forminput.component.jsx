@@ -1,6 +1,8 @@
 import React from "react";
 
 import "./forminput.styles.css";
+
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 class FormInput extends React.Component {
   constructor(props) {
     super(props);
@@ -25,11 +27,9 @@ class FormInput extends React.Component {
           {...otherProps}
         />
         {type === "password" ? (
-          <input
-            type="checkbox"
-            name="passwordViewable"
-            onChange={this.Clicked}
-          />
+          <div name="passwordViewable" onClick={this.Clicked} className="view ">
+            {this.state.passwordViewable ? <VisibilityOff /> : <Visibility />}
+          </div>
         ) : null}
         {label ? (
           <label
