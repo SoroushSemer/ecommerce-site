@@ -7,8 +7,8 @@ import ShopPage from "./pages/shop/shop.component";
 import Header from "./components/header/header.component";
 import SignInUpPage from "./pages/sign-in-up/sign-in-up.component";
 
-import { auth } from "./firebase/firebase.utils";
-
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import { onSnapshot } from "firebase/firestore";
 const CategoryPage = (props) => {
   console.log(props);
   return (
@@ -30,9 +30,22 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      this.setState({ currentUser: user });
-      console.log(this.state.currentUser);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userPath = await createUserProfileDocument(userAuth);
+        onSnapshot(userPath, (snapshot) => {
+          this.setState(
+            {
+              currentUser: {
+                id: snapshot.id,
+                ...snapshot.data(),
+              },
+            },
+            () => console.log(this.state)
+          );
+        });
+      }
+      this.setState({ currentUser: userAuth });
     });
   }
 

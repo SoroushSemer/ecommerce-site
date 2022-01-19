@@ -5,7 +5,7 @@
 .form-input {
   background: none;
   background-color: white;
-  color: grey;
+  /* color: grey; */
   font-size: 18px;
   padding: 10px 10px 10px 5px;
   display: block;
@@ -17,6 +17,8 @@
 }
 .form-input:focus {
   outline: none;
+  color: black;
+  border-bottom: 2px solid black;
 }
 .form-input:focus ~ .form-input-label {
   top: -14px;
@@ -32,4 +34,10 @@
   left: 5px;
   top: 10px;
   transition: 300ms ease all;
+}
+
+.shrink {
+  top: -14px;
+  font: 12px;
+  color: black;
 }
