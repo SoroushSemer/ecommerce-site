@@ -3,21 +3,48 @@ import "./sign-up.styles.css";
 
 import FormInput from "../forminput/forminput.component";
 import CustomButton from "../custombutton/custombutton.component";
+
+import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      name: "",
+      displayName: "",
       email: "",
       password: "",
-      confirmation: "",
+      confirmPassword: "",
     };
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
-    this.setState({ email: "", password: "", confirmation: "", name: "" });
+
+    const { displayName, email, password, confirmPassword } = this.state;
+
+    if (password !== confirmPassword) {
+      alert("passwords don't match");
+      return;
+    }
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await createUserProfileDocument(user, { displayName });
+
+      this.setState({
+        displayName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   handleChange = (event) => {
@@ -33,9 +60,9 @@ class SignUp extends React.Component {
 
         <form onSubmit={this.handleSubmit}>
           <FormInput
-            name="name"
+            name="displayName"
             type="text"
-            value={this.state.name}
+            value={this.state.displayName}
             onChange={this.handleChange}
             label="Display Name"
             required
@@ -57,9 +84,9 @@ class SignUp extends React.Component {
             required
           />
           <FormInput
-            name="confirmation"
+            name="confirmPassword"
             type="password"
-            value={this.state.confirmation}
+            value={this.state.confirmPassword}
             onChange={this.handleChange}
             label="Confirm Password"
             required

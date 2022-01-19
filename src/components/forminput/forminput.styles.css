@@ -41,3 +41,8 @@
   font: 12px;
   color: black;
 }
+
+.password {
+  width: 90%;
+  display: block;
+}
